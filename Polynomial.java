@@ -7,13 +7,16 @@ public class Polynomial{
 	}
 	
 	public Polynomial(double[] coefficients) {
-		this.coefficients = new double[coefficients.length];
-		for(int i = 0; i< coefficients.length; i++) {
-			this.coefficients[i] = coefficients[i]; 
+		if(coefficients != null){
+			this.coefficients = new double[coefficients.length];
+			for(int i = 0; i< coefficients.length; i++) {
+				this.coefficients[i] = coefficients[i]; 
+			}
 		}
 	}
 	
 	public Polynomial add(Polynomial toadd) {
+		if(toadd == null){return null;}
 		int maxPolyDeg = Math.max(toadd.coefficients.length, this.coefficients.length);
 		int minPolyDeg = Math.min(toadd.coefficients.length, this.coefficients.length);
 		if(toadd.coefficients.length == maxPolyDeg) {
