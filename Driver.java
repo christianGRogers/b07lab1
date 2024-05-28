@@ -1,18 +1,31 @@
 public class Driver {
+	public static void printPolynomial(Polynomial toPrint){
+		int i = 0;
+		for(; i< toPrint.coefficients.length-1; i++){
+			System.out.print("(");
+			System.out.print(toPrint.coefficients[i]);
+			System.out.print("x^");
+			System.out.print(toPrint.exponents[i]);
+			System.out.print(")");
+			System.out.print("+");
+		}
+		System.out.print("(");
+		System.out.print(toPrint.coefficients[i]);
+		System.out.print("x^");
+		System.out.print(toPrint.exponents[i]);
+		System.out.print(")");
+		System.out.print("\n");
+	}
 	public static void main(String [] args) {
-		Polynomial p = new Polynomial();
-		System.out.println(p.evaluate(3));
-		double [] c1 = {6,0,0,5};
-		Polynomial p1 = new Polynomial(c1);
-		double [] c2 = {0,-2,0,0,-9};
-		Polynomial p2 = new Polynomial(c2);
-		Polynomial s = p1.add(p2);
-		System.out.println("s(0.1) = " + s.evaluate(0.1));
-		if(s.hasRoot(1))
-			System.out.println("1 is a root of s");
-		else
-			System.out.println("1 is not a root of s");
-		Polynomial n = new Polynomial(null);
-		s = p1.add(null);
+		double[] c1 = {1,2,3,4,5};
+		int[] e1 = {0,3,1,2,4};
+		double[] c2 = {1,2,3,4,5,6,7};
+		int[] e2 = {1,2,4,0,3,6,3};
+		Polynomial p1 = new Polynomial(c1, e1);
+		printPolynomial(p1);
+		Polynomial p2 = new Polynomial(c2, e2);
+		printPolynomial(p2);
+		Polynomial added = p1.add(p2);
+		printPolynomial(added);
 	}
 }
