@@ -29,7 +29,7 @@ public class Polynomial{
 				}
 			}
 		}
-	}
+	} 
 	
 	public Polynomial add(Polynomial toadd) {
 		if(toadd == null){return null;}
