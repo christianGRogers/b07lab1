@@ -1,16 +1,32 @@
 public class Polynomial{
 	double[] coefficients;
-	
+	double[] exponents;
+
 	public Polynomial() {
 		coefficients = new double[1];
 		coefficients[0] = 0;
+		exponents = new double[1];
+		coefficients[0] = 0;
 	}
-	
+	int getNonZeroCoeff(double[] coefficients){
+		int count = 0;
+		for(int i = 0; i< coefficients.length; i++){
+			if(coefficients[i] != 0){
+				count++;
+			}
+		}
+		return count;
+	}
 	public Polynomial(double[] coefficients) {
 		if(coefficients != null){
-			this.coefficients = new double[coefficients.length];
-			for(int i = 0; i< coefficients.length; i++) {
-				this.coefficients[i] = coefficients[i]; 
+			int sizeOfPoly = getNonZeroCoeff(coefficients);
+			this.coefficients = new double[sizeOfPoly];
+			exponents = new double[sizeOfPoly];
+			for(int i = 0; i< sizeOfPoly; i++) {
+				if(coefficients[i] != 0){
+					this.coefficients[i] = coefficients[i];
+					exponents[i] = i;
+				}
 			}
 		}
 	}
