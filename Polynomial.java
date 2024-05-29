@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.FileWriter;
+
 public class Polynomial{
 	double[] coefficients;
 	int[] exponents;
@@ -101,9 +107,12 @@ public class Polynomial{
 		Polynomial ret = new Polynomial();
 		ret.exponents = new int[termsOfSum];
 		ret.coefficients = new double[termsOfSum];
-		for(i = 0; i < termsOfSum; i++){
-			ret.coefficients[i] = sumCoeff[i];
-			ret.exponents[i] = sumExp[i];
+		for(i = 0; i < termsOfSum;){
+			if(sumCoeff[i] != 0){
+				ret.coefficients[i] = sumCoeff[i];
+				ret.exponents[i] = sumExp[i];
+				i++;
+			}
 		}
 		return ret;
 	}
@@ -121,8 +130,59 @@ public class Polynomial{
 	}
 
 	public Polynomial multiply(Polynomial toMult){
+		Polynomial tempMult;
 		Polynomial product = new Polynomial();
+		for(int i = 0; i < toMult.coefficients.length; i++){
+			tempMult = new Polynomial(toMult.coefficients, toMult.exponents);
+			for(int j = 0;  j < coefficients.length; j++){
+				tempMult.coefficients[j] *= coefficients[i];
+				tempMult.exponents[j] += exponents[i];
+			}
+			product.add(tempMult);
+		}
 		return product;
+	}
+
+	public Polynomial(File readFile){
+		Scanner input;
+		try{
+			input = new Scanner(readFile);
+			String inputString  = input.nextLine();
+			System.out.println(inputString);
+		}
+		catch(FileNotFoundException error){
+			System.out.println("File not found");
+			error.printStackTrace();
+
+		}
+	}
+
+	public String formatEqn(){
+		String output = "";
+		int i = 0;
+		output += String.valueOf(coefficients[i]);
+		output += "x";
+		output += String.valueOf(exponents[i]);
+		for(; i< coefficients.length; i++){
+			if(coefficients[i] > 0){
+				output += "+";
+			}
+			output += String.valueOf(coefficients[i]);
+			output += "x";
+			output += String.valueOf(exponents[i]);
+		}
+		return output;
+	}
+
+	public void saveToFile(String fileName){
+		try {
+      		FileWriter output = new FileWriter(fileName);
+      		output.write(formatEqn());
+      		output.close();
+    	} catch (IOException error) {
+      		System.out.println("File not found");
+      		error.printStackTrace();
+    }
 	}
 
 }

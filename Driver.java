@@ -1,3 +1,4 @@
+import java.io.File;
 public class Driver {
 	public static void printPolynomial(Polynomial toPrint){
 		int i = 0;
@@ -27,5 +28,7 @@ public class Driver {
 		printPolynomial(p2);
 		Polynomial added = p1.add(p2);
 		printPolynomial(added);
+		Polynomial p4 = new Polynomial(new File("info.txt"));
+		added.saveToFile("saveFile.txt");
 	}
 }
