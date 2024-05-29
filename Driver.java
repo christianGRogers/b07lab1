@@ -20,7 +20,7 @@ public class Driver {
 	public static void main(String [] args) {
 		double[] c1 = {1,2,3,4,5};
 		int[] e1 = {0,3,1,2,4};
-		double[] c2 = {1,2,3,4,5,6,7};
+		double[] c2 = {1,2,3,4,6,-7};
 		int[] e2 = {1,2,4,0,3,6,3};
 		Polynomial p1 = new Polynomial(c1, e1);
 		printPolynomial(p1);
@@ -28,7 +28,8 @@ public class Driver {
 		printPolynomial(p2);
 		Polynomial added = p1.add(p2);
 		printPolynomial(added);
-		Polynomial p4 = new Polynomial(new File("info.txt"));
 		added.saveToFile("saveFile.txt");
+		Polynomial p4 = new Polynomial(new File("saveFile.txt"));
+		printPolynomial(p4);
 	}
 }

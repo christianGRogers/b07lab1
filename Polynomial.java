@@ -148,7 +148,15 @@ public class Polynomial{
 		try{
 			input = new Scanner(readFile);
 			String inputString  = input.nextLine();
-			System.out.println(inputString);
+			String[] terms = inputString.split("(?=[+-])");
+			exponents = new int[terms.length];
+			coefficients = new double[terms.length];
+			for (int i = 0; i < terms.length; i++) {
+            	String term = terms[i];
+            	String[] parts = term.split("x");
+            	coefficients[i] = Double.parseDouble(parts[0]);
+            	exponents[i] = Integer.parseInt(parts[1]);
+        	}
 		}
 		catch(FileNotFoundException error){
 			System.out.println("File not found");
@@ -163,6 +171,7 @@ public class Polynomial{
 		output += String.valueOf(coefficients[i]);
 		output += "x";
 		output += String.valueOf(exponents[i]);
+		i++;
 		for(; i< coefficients.length; i++){
 			if(coefficients[i] > 0){
 				output += "+";
@@ -182,7 +191,7 @@ public class Polynomial{
     	} catch (IOException error) {
       		System.out.println("File not found");
       		error.printStackTrace();
-    }
+    	}
 	}
 
 }
