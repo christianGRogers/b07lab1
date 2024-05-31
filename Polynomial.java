@@ -113,6 +113,11 @@ public class Polynomial{
 			sumCoeff[s] = c2.coefficients[j];
 			j++; s++;
 		}
+		while(i < c1.coefficients.length){
+			sumExp[s] = c1.exponents[i];
+			sumCoeff[s] = c1.coefficients[i];
+			i++; s++;
+		}
 		//copy back to shortened aray
 		int termsOfSum = getNonZeroCoeff(sumCoeff);
 		Polynomial ret = new Polynomial();

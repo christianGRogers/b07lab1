@@ -15,6 +15,7 @@ public class Driver {
         testFileConstructor();
         testFormatEqn();
         testSaveToFile();
+		System.out.println("Done test execution");
     }
 
     public static void testDefaultConstructor() {
@@ -70,22 +71,25 @@ public class Driver {
 		poly1 = new Polynomial(new double[]{1, 2}, new int[]{1, 2});
 		poly2 = new Polynomial(new double[]{1, 1}, new int[]{1, 0});
 		result = poly1.multiply(poly2);
-		assertArrayEquals(new double[]{1, 2, 2}, result.coefficients, "testMultiply - coefficients (Test 3)");
+		assertArrayEquals(new double[]{1, 3, 2}, result.coefficients, "testMultiply - coefficients (Test 3)");
 		assertArrayEquals(new int[]{1, 2, 3}, result.exponents, "testMultiply - exponents (Test 3)");
-	
-		// Test 4: Multiplying two polynomials with multiple terms
-		poly1 = new Polynomial(new double[]{3, 2, 1}, new int[]{2, 1, 0});
-		poly2 = new Polynomial(new double[]{4, -1, 2}, new int[]{1, 1, 0});
-		result = poly1.multiply(poly2);
-		assertArrayEquals(new double[]{2, 6, -3, 10, 4}, result.coefficients, "testMultiply - coefficients (Test 4)");
-		assertArrayEquals(new int[]{0, 1, 2, 3, 4}, result.exponents, "testMultiply - exponents (Test 4)");
+		
+		// Test: Multiplying two polynomials with multiple terms
+       	poly1 = new Polynomial(new double[]{3, 2, 1}, new int[]{2, 1, 0});
+        poly2 = new Polynomial(new double[]{4, -1, 2}, new int[]{1, 3, 0});
+        result = poly1.multiply(poly2);
+        // Expected coefficients and exponents after multiplication (ordered by coefficients)
+        double[] expectedCoefficients = {2, 8, 14, 11, -2, -3};
+        int[] expectedExponents = {0, 1, 2, 3, 4, 5};
+		assertArrayEquals(expectedCoefficients, result.coefficients, "testMultiply - coefficients");
+        assertArrayEquals(expectedExponents, result.exponents, "testMultiply - exponents");
 	
 		// Test 5: Multiplying by one
 		poly1 = new Polynomial(new double[]{1}, new int[]{0});
 		poly2 = new Polynomial(new double[]{4, 3, 2, 1}, new int[]{3, 2, 1, 0});
 		result = poly1.multiply(poly2);
-		assertArrayEquals(new double[]{4, 3, 2, 1}, result.coefficients, "testMultiply - coefficients (Test 5)");
-		assertArrayEquals(new int[]{3, 2, 1, 0}, result.exponents, "testMultiply - exponents (Test 5)");
+		assertArrayEquals(new double[]{1,2,3,4}, result.coefficients, "testMultiply - coefficients (Test 5)");
+		assertArrayEquals(new int[]{0,1,2,3}, result.exponents, "testMultiply - exponents (Test 5)");
 	}
 
     public static void testFileConstructor() {
