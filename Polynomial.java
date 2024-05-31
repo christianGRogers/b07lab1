@@ -24,20 +24,20 @@ public class Polynomial{
 		return count;
 	}
 
-	public void sortByExpo(){
+	public void sortByExpo(Polynomial tosort){
 		int i = 0;
 		int j = 0;
 		int swap1;
 		double swap2;
-		while(i < exponents.length){
-			while(j < exponents.length){
-				if(exponents[i] > exponents[j]){
-					swap1 = exponents[i];
-					exponents[i] = exponents[j];
-					exponents[j] = swap1;
-					swap2 = coefficients[i];
-					coefficients[i] = coefficients[j];
-					coefficients[j] = swap2;
+		while(i < tosort.exponents.length){
+			while(j < tosort.exponents.length){
+				if(tosort.exponents[i] > tosort.exponents[j]){
+					swap1 = tosort.exponents[i];
+					tosort.exponents[i] = tosort.exponents[j];
+					tosort.exponents[j] = swap1;
+					swap2 = tosort.coefficients[i];
+					tosort.coefficients[i] = tosort.coefficients[j];
+					tosort.coefficients[j] = swap2;
 				}
 				j++;
 			}
@@ -46,15 +46,24 @@ public class Polynomial{
 		}
 	}
 
+	public void sortByExpo(){
+		sortByExpo(this);
+	}
+
 	public Polynomial(double[] coefficients, int[] exponents) {
-		if(coefficients != null){
+		if(coefficients.length != exponents.length){
+			return;
+		}
+		else if(coefficients != null){
 			int sizeOfPoly = getNonZeroCoeff(coefficients);
 			this.coefficients = new double[sizeOfPoly];
 			this.exponents = new int[sizeOfPoly];
-			for(int i = 0; i< sizeOfPoly; i++){
+			int rezIndex = 0;
+			for(int i = 0; i < coefficients.length ; i++){
 				if(coefficients[i] != 0){
-					this.coefficients[i] = coefficients[i];
-					this.exponents[i] = exponents[i];
+					this.coefficients[rezIndex] = coefficients[i];
+					this.exponents[rezIndex] = exponents[i];
+					rezIndex++;
 				}
 			}
 			sortByExpo();
@@ -63,6 +72,8 @@ public class Polynomial{
 	
 	public Polynomial add(Polynomial toadd) {
 		if(toadd == null){return null;}
+		sortByExpo(toadd);
+		sortByExpo();
 		int i = 0;
 		int j = 0;
 		int s = 0;
@@ -80,7 +91,7 @@ public class Polynomial{
 			c2 = this;
 			c1 = toadd;
 		}
-		while(i < c1.coefficients.length){
+		while(i < c1.coefficients.length && j < c2.coefficients.length){
 			if(c1.exponents[i] == c2.exponents[j]){
 				sumExp[s] = c1.exponents[i];
 				sumCoeff[s] = c1.coefficients[i] + c2.coefficients[j];
@@ -107,11 +118,12 @@ public class Polynomial{
 		Polynomial ret = new Polynomial();
 		ret.exponents = new int[termsOfSum];
 		ret.coefficients = new double[termsOfSum];
-		for(i = 0; i < termsOfSum;){
+		int retIndex = 0;
+		for(i = 0; i < sumCoeff.length; i++){
 			if(sumCoeff[i] != 0){
-				ret.coefficients[i] = sumCoeff[i];
-				ret.exponents[i] = sumExp[i];
-				i++;
+				ret.coefficients[retIndex] = sumCoeff[i];
+				ret.exponents[retIndex] = sumExp[i];
+				retIndex++;
 			}
 		}
 		return ret;
@@ -132,13 +144,13 @@ public class Polynomial{
 	public Polynomial multiply(Polynomial toMult){
 		Polynomial tempMult;
 		Polynomial product = new Polynomial();
-		for(int i = 0; i < toMult.coefficients.length; i++){
+		for(int i = 0;  i < coefficients.length; i++){
 			tempMult = new Polynomial(toMult.coefficients, toMult.exponents);
-			for(int j = 0;  j < coefficients.length; j++){
+			for(int j = 0; j < toMult.coefficients.length; j++){
 				tempMult.coefficients[j] *= coefficients[i];
 				tempMult.exponents[j] += exponents[i];
 			}
-			product.add(tempMult);
+			product = product.add(tempMult);
 		}
 		return product;
 	}
@@ -157,6 +169,8 @@ public class Polynomial{
             	coefficients[i] = Double.parseDouble(parts[0]);
             	exponents[i] = Integer.parseInt(parts[1]);
         	}
+			sortByExpo();
+			
 		}
 		catch(FileNotFoundException error){
 			System.out.println("File not found");
